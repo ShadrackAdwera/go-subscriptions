@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
@@ -38,6 +39,8 @@ func main() {
 	srv := api.NewServer(store, paseto)
 
 	err = srv.StartServer("0.0.0.0:5000")
+
+	fmt.Println("Auth Service listening on PORT: 5000")
 
 	if err != nil {
 		log.Fatal(err)
