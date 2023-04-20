@@ -15,6 +15,7 @@ purchase and manage recurring monthly subscriptions
 
 - Run the application as a distributed system.
 - Use SAGAs (orchestrator pattern) for communication between the services.
+- Emit events as protobufs (gRPC) as opposed to JSON.
 - Use concurrency for asynchronous requests.
 - Host solution to AWS EKS.
 
@@ -25,4 +26,5 @@ purchase and manage recurring monthly subscriptions
 - Go
 - Gin
 - Redis
+- gRPC
 - Stripe
