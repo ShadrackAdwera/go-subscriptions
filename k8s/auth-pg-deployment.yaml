@@ -30,6 +30,8 @@ spec:
               value: password
             - name: POSTGRES_USER
               value: root
+            - name: POSTGRES_DB
+              value: go_subscriptions_auth
 
 ---
 
