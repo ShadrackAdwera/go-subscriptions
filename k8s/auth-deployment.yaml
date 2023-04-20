@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-go-subscriptions-deployment
+  labels:
+    app: auth-go-subscriptions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-go-subscriptions
+  template:
+    metadata:
+      labels:
+        app: auth-go-subscriptions
+    spec:
+      containers:
+      - name: auth-go-subscriptions
+        image: adwera/auth-go-subscriptions
+        resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-go-subscriptions-service
+spec:
+  selector:
+    app: auth-go-subscriptions
+  ports:
+    - name: auth-go-subscriptions
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
