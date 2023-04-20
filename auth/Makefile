@@ -1,4 +1,4 @@
-DB_URL=postgresql://root:password@localhost:5431/go_subscriptions_auth?sslmode=disable
+DB_URL=postgresql://root:password@localhost:5432/go_subscriptions_auth?sslmode=disable
 
 postgres:
 	docker run --name postgres -p 5431:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -d postgres:15.2-alpine
