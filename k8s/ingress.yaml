@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth-go-subscriptions-ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: app.k8s.io
+      http:
+        paths:
+          - path: /auth/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-go-subscriptions-service
+                port:
+                  number: 5000
