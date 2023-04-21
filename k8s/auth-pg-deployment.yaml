@@ -28,10 +28,12 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: password
-            - name: POSTGRES_USER
-              value: root
-            - name: POSTGRES_DB
-              value: go_subscriptions_auth
+            - name: PGDATABASE
+              value: postgres
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
 
 ---
 
