@@ -4,10 +4,11 @@ purchase and manage recurring monthly subscriptions
 
 ## Process
 
-- Sign up, select package to pay for.
+- Sign up.
+- Select package to subscribe to.
 - Receive email to complete purchase process.
 - Email has a link to pay for the package.
-- On payment, account is created.
+- On payment, stripe webhook creates a record of payment on the subscriptions service.
 - Documentation sent on mail with set up / installation instructions.
 - Subscription charged monthly on the account provided.
 
