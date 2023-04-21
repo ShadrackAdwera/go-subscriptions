@@ -40,10 +40,12 @@ jobs:
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
         sudo mv migrate /usr/bin/
         which migrate
+
+    - name: Switch to auth service
+      run: cd auth
+
     - name: Run migrations
       run: make migrate_up
 
     - name: Test Auth
-      run: |
-        cd auth
-        make tests
+      run: make tests
