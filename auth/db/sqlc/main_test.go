@@ -13,7 +13,7 @@ var testDb *sql.DB
 
 func TestMain(m *testing.M) {
 	var err error
-	url := "postgresql://postgres:password@localhost:5431/postgres?sslmode=disable"
+	url := "postgresql://postgres:password@localhost:5432/postgres?sslmode=disable"
 
 	testDb, err = sql.Open("postgres", url)
 
