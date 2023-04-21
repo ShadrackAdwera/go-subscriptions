@@ -41,11 +41,12 @@ jobs:
         sudo mv migrate /usr/bin/
         which migrate
 
-    - name: Switch to auth service
-      run: cd auth
-
-    - name: Run migrations
-      run: make migrate_up
+    - name: Switch to auth service and run migrations
+      run: |
+        cd auth
+        make migrate_up
 
     - name: Test Auth
-      run: make tests
+      run: |
+        cd auth
+        make tests
