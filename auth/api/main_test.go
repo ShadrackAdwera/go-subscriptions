@@ -18,7 +18,7 @@ func newServer(store db.TxStore) *Server {
 		log.Panic(err)
 	}
 
-	srv := NewServer(store, tknMaker)
+	srv := NewServer(store, tknMaker, nil)
 	return srv
 }
 
