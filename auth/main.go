@@ -9,6 +9,8 @@ import (
 	"github.com/ShadrackAdwera/go-subscriptions/api"
 	db "github.com/ShadrackAdwera/go-subscriptions/db/sqlc"
 	"github.com/ShadrackAdwera/go-subscriptions/token"
+	"github.com/ShadrackAdwera/go-subscriptions/workers"
+	"github.com/hibiken/asynq"
 	"github.com/joho/godotenv"
 
 	_ "github.com/lib/pq"
@@ -27,6 +29,7 @@ func main() {
 	}
 
 	url := os.Getenv("PG_TEST_URL")
+	redisAddr := os.Getenv("REDIS_ADDRESS")
 
 	conn, err := sql.Open("postgres", url)
 
@@ -34,9 +37,15 @@ func main() {
 		log.Fatal(err)
 	}
 
+	redisConf := &asynq.RedisClientOpt{
+		Addr: redisAddr,
+	}
+
+	distro := workers.NewDistributor(redisConf)
+
 	store := db.NewStore(conn)
 
-	srv := api.NewServer(store, paseto)
+	srv := api.NewServer(store, paseto, distro)
 
 	err = srv.StartServer("0.0.0.0:5000")
 
