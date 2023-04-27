@@ -1,4 +1,4 @@
--- name: CreateUser :one
+-- name: CreateSubscriptionUser :one
 INSERT INTO users (
   id, username, email
 ) VALUES (
@@ -6,10 +6,10 @@ INSERT INTO users (
 )
 RETURNING *;
 
--- name: GetUsers :many
+-- name: GetSubscriptionUsers :many
 SELECT * FROM users;
 
--- name: UpdateUser :one
+-- name: UpdateSubscriptionUser :one
 UPDATE users 
 SET
   username = COALESCE(sqlc.narg(username),username),
@@ -17,5 +17,5 @@ SET
 WHERE id = sqlc.arg(id)
 RETURNING *;
 
--- name: DeleteUser :exec
+-- name: DeleteSubscriptionUser :exec
 DELETE FROM users WHERE id = $1;
