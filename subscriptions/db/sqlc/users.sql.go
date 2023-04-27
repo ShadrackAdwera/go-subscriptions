@@ -10,7 +10,7 @@ import (
 	"database/sql"
 )
 
-const createUser = `-- name: CreateUser :one
+const createSubscriptionUser = `-- name: CreateSubscriptionUser :one
 INSERT INTO users (
   id, username, email
 ) VALUES (
@@ -19,14 +19,14 @@ INSERT INTO users (
 RETURNING id, username, email, created_at
 `
 
-type CreateUserParams struct {
+type CreateSubscriptionUserParams struct {
 	ID       int64  `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
-	row := q.db.QueryRowContext(ctx, createUser, arg.ID, arg.Username, arg.Email)
+func (q *Queries) CreateSubscriptionUser(ctx context.Context, arg CreateSubscriptionUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, createSubscriptionUser, arg.ID, arg.Username, arg.Email)
 	var i User
 	err := row.Scan(
 		&i.ID,
@@ -37,21 +37,21 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	return i, err
 }
 
-const deleteUser = `-- name: DeleteUser :exec
+const deleteSubscriptionUser = `-- name: DeleteSubscriptionUser :exec
 DELETE FROM users WHERE id = $1
 `
 
-func (q *Queries) DeleteUser(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deleteUser, id)
+func (q *Queries) DeleteSubscriptionUser(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, deleteSubscriptionUser, id)
 	return err
 }
 
-const getUsers = `-- name: GetUsers :many
+const getSubscriptionUsers = `-- name: GetSubscriptionUsers :many
 SELECT id, username, email, created_at FROM users
 `
 
-func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
-	rows, err := q.db.QueryContext(ctx, getUsers)
+func (q *Queries) GetSubscriptionUsers(ctx context.Context) ([]User, error) {
+	rows, err := q.db.QueryContext(ctx, getSubscriptionUsers)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
 	return items, nil
 }
 
-const updateUser = `-- name: UpdateUser :one
+const updateSubscriptionUser = `-- name: UpdateSubscriptionUser :one
 UPDATE users 
 SET
   username = COALESCE($1,username),
@@ -87,14 +87,14 @@ WHERE id = $3
 RETURNING id, username, email, created_at
 `
 
-type UpdateUserParams struct {
+type UpdateSubscriptionUserParams struct {
 	Username sql.NullString `json:"username"`
 	Email    sql.NullString `json:"email"`
 	ID       int64          `json:"id"`
 }
 
-func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error) {
-	row := q.db.QueryRowContext(ctx, updateUser, arg.Username, arg.Email, arg.ID)
+func (q *Queries) UpdateSubscriptionUser(ctx context.Context, arg UpdateSubscriptionUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, updateSubscriptionUser, arg.Username, arg.Email, arg.ID)
 	var i User
 	err := row.Scan(
 		&i.ID,

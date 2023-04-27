@@ -10,16 +10,16 @@ import (
 
 type Querier interface {
 	CreatePackage(ctx context.Context, arg CreatePackageParams) (Package, error)
-	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
+	CreateSubscriptionUser(ctx context.Context, arg CreateSubscriptionUserParams) (User, error)
 	CreateUserPackage(ctx context.Context, arg CreateUserPackageParams) (UsersPackage, error)
 	DeletePackage(ctx context.Context, id int64) error
-	DeleteUser(ctx context.Context, id int64) error
+	DeleteSubscriptionUser(ctx context.Context, id int64) error
 	DeleteUserPackage(ctx context.Context, id int64) error
 	GetPackages(ctx context.Context) ([]Package, error)
+	GetSubscriptionUsers(ctx context.Context) ([]User, error)
 	GetUserPackages(ctx context.Context) ([]GetUserPackagesRow, error)
-	GetUsers(ctx context.Context) ([]User, error)
 	UpdatePackage(ctx context.Context, arg UpdatePackageParams) (Package, error)
-	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
+	UpdateSubscriptionUser(ctx context.Context, arg UpdateSubscriptionUserParams) (User, error)
 	UpdateUserPackage(ctx context.Context, arg UpdateUserPackageParams) (UsersPackage, error)
 }
 
