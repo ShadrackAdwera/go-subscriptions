@@ -3,12 +3,11 @@ package workers
 import (
 	"context"
 
-	db "github.com/ShadrackAdwera/go-subscriptions/db/sqlc"
 	"github.com/hibiken/asynq"
 )
 
 type Distributor interface {
-	DistributeUser(ctx context.Context, user db.User, opts ...asynq.Option) error
+	DistributeUser(ctx context.Context, user UserPayload, opts ...asynq.Option) error
 }
 
 type TaskDistributor struct {
