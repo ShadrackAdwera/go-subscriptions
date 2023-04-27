@@ -5,14 +5,19 @@ import (
 	"encoding/json"
 	"fmt"
 
-	db "github.com/ShadrackAdwera/go-subscriptions/db/sqlc"
 	"github.com/hibiken/asynq"
 	"github.com/rs/zerolog/log"
 )
 
+type UserPayload struct {
+	ID       int64  `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+}
+
 const TaskCreateUser = "task:create_user"
 
-func (distro *TaskDistributor) DistributeUser(ctx context.Context, user db.User, opts ...asynq.Option) error {
+func (distro *TaskDistributor) DistributeUser(ctx context.Context, user UserPayload, opts ...asynq.Option) error {
 	jsonPayload, err := json.Marshal(user)
 
 	if err != nil {
