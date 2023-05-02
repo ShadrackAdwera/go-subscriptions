@@ -14,17 +14,18 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres
+          image: postgres:10.1
+          imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
           env:
             - name: POSTGRES_PASSWORD
               value: password
-            - name: PGDATABASE
+            - name: POSTGRES_DATABASE
               value: postgres
-            - name: PGUSER
+            - name: POSTGRES_USER
               value: postgres
-            - name: PGHOST
+            - name: POSTGRES_HOST
               value: subscriptions-postgres-service
 
 ---
