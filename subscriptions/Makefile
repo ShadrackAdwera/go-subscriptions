@@ -1,4 +1,4 @@
-DB_URL=postgresql://root:password@localhost:5431/go_subscriptions_subscriptions?sslmode=disable
+DB_URL=postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
 
 migrate_create:
 	migrate create -ext sql -dir db/migrations -seq ${MIGRATE_NAME}

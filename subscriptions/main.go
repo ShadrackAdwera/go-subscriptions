@@ -21,7 +21,7 @@ func main() {
 		log.Fatalf("Failed to load the env vars: %v", err)
 	}
 
-	url := os.Getenv("PG_TEST_URL")
+	url := os.Getenv("PG_SUBSCRIPTIONS_URL")
 	redisAddr := os.Getenv("REDIS_ADDRESS")
 
 	conn, err := sql.Open("postgres", url)
