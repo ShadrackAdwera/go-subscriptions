@@ -18,7 +18,8 @@ spec:
             claimName: pg-persistent-volume-claim
       containers:
         - name: postgres
-          image: postgres
+          image: postgres:10.1
+          imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
           volumeMounts:
@@ -28,11 +29,11 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: password
-            - name: PGDATABASE
+            - name: POSTGRES_DB
               value: postgres
-            - name: PGUSER
+            - name: POSTGRES_USER
               value: postgres
-            - name: PGHOST
+            - name: POSTGRES_HOST
               value: postgres-cluster-ip-service
 
 ---
