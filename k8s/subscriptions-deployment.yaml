@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriptions-go-subscriptions-deployment
+  labels:
+    app: subscriptions-go-subscriptions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subscriptions-go-subscriptions
+  template:
+    metadata:
+      labels:
+        app: subscriptions-go-subscriptions
+    spec:
+      containers:
+      - name: subscriptions-go-subscriptions
+        image: adwera/subscriptions-go-subscriptions
+        resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subscriptions-go-subscriptions-service
+spec:
+  selector:
+    app: subscriptions-go-subscriptions
+  ports:
+    - name: subscriptions-go-subscriptions
+      protocol: TCP
+      port: 5001
+      targetPort: 5001

@@ -8,8 +8,10 @@ import (
 
 	db "github.com/ShadrackAdwera/go-subscriptions/db/sqlc"
 	"github.com/ShadrackAdwera/go-subscriptions/utils"
+	"github.com/ShadrackAdwera/go-subscriptions/workers"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/hibiken/asynq"
 )
 
 type SignUpArgs struct {
@@ -57,9 +59,12 @@ func (s *Server) signUp(ctx *gin.Context) {
 			Email:    signUpArgs.Email,
 			Password: hashedPw,
 		},
-		AfterCreate: func() error {
-			// emit user:created event to redis queue
-			return nil
+		AfterCreate: func(user db.User) error {
+			return s.distro.DistributeUser(ctx, workers.UserPayload{
+				ID:       user.ID,
+				Username: user.Username,
+				Email:    user.Email,
+			}, asynq.MaxRetry(10))
 		},
 	})
 

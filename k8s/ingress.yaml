@@ -17,3 +17,10 @@ spec:
                 name: auth-go-subscriptions-service
                 port:
                   number: 5000
+          - path: /subscriptions/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: subscriptions-go-subscriptions-service
+                port:
+                  number: 5001
