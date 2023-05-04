@@ -1,7 +1,7 @@
 package api
 
 import (
-	"net/http"
+	"fmt"
 
 	db "github.com/ShadrackAdwera/go-subscriptions/subscriptions/db/sqlc"
 	"github.com/gin-gonic/gin"
@@ -9,10 +9,10 @@ import (
 
 type Server struct {
 	router *gin.Engine
-	store  db.TxStore
+	store  db.TxSubscriptionsStore
 }
 
-func NewServer(store db.TxStore) *Server {
+func NewServer(store db.TxSubscriptionsStore) *Server {
 	router := gin.Default()
 
 	srv := Server{
@@ -20,9 +20,8 @@ func NewServer(store db.TxStore) *Server {
 	}
 
 	//add middleware
-	router.GET("/subscriptions", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusAccepted, gin.H{"message": "ping subscription service"})
-	})
+	router.GET("/subscriptions", srv.getPackages)
+	router.POST("/subscriptions", srv.createPackage)
 
 	srv.router = router
 	return &srv
@@ -30,4 +29,8 @@ func NewServer(store db.TxStore) *Server {
 
 func (s *Server) StartServer(addr string) error {
 	return s.router.Run(addr)
+}
+
+func errJSON(err error) gin.H {
+	return gin.H{"message": fmt.Errorf(err.Error())}
 }

@@ -21,10 +21,10 @@ type TaskProcessor interface {
 
 type Processor struct {
 	srv   *asynq.Server
-	store db.TxStore
+	store db.TxSubscriptionsStore
 }
 
-func NewProcessor(opts *asynq.RedisClientOpt, store db.TxStore) TaskProcessor {
+func NewProcessor(opts *asynq.RedisClientOpt, store db.TxSubscriptionsStore) TaskProcessor {
 	server := asynq.NewServer(opts, asynq.Config{
 		ErrorHandler: asynq.ErrorHandlerFunc(func(ctx context.Context, task *asynq.Task, err error) {
 			log.Err(err).Str("task_type", task.Type()).Bytes("payload", task.Payload()).Msg("error processing task . . ")

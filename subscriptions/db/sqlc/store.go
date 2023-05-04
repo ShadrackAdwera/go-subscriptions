@@ -2,7 +2,7 @@ package db
 
 import "database/sql"
 
-type TxStore interface {
+type TxSubscriptionsStore interface {
 	Querier
 }
 
@@ -11,7 +11,7 @@ type Store struct {
 	db *sql.DB
 }
 
-func NewStore(db *sql.DB) TxStore {
+func NewStore(db *sql.DB) TxSubscriptionsStore {
 	return &Store{
 		db:      db,
 		Queries: New(db),

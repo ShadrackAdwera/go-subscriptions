@@ -47,7 +47,7 @@ func main() {
 
 }
 
-func ListenToQueue(opts *asynq.RedisClientOpt, store db.TxStore) {
+func ListenToQueue(opts *asynq.RedisClientOpt, store db.TxSubscriptionsStore) {
 	processor := workers.NewProcessor(opts, store)
 
 	err := processor.Start()
