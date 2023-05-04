@@ -11,7 +11,7 @@ sqlc:
 tests:
 	go test -v -cover ./...
 mocks:
-	mockgen -package mockdb --destination db/mocks/store.go github.com/ShadrackAdwera/go-subscriptions/db/sqlc TxStore
+	mockgen -package mocksdb --destination db/mocks/store.go github.com/ShadrackAdwera/go-subscriptions/subscriptions/db/sqlc TxSubscriptionsStore
 start:
 	go run main.go
 
