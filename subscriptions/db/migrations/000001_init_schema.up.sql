@@ -22,7 +22,7 @@ CREATE TABLE "packages" (
 CREATE TABLE "users_packages" (
   "id" varchar PRIMARY KEY,
   "user_id" bigint NOT NULL,
-  "package_id" bigint NOT NULL,
+  "package_id" varchar NOT NULL,
   "status" subscription_status NOT NULL,
   "start_date" timestamptz NOT NULL DEFAULT (now()),
   "end_date" timestamptz NOT NULL DEFAULT (now())

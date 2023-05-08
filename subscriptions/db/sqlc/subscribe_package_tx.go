@@ -41,6 +41,7 @@ func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxI
 			if err == sql.ErrNoRows {
 				return fmt.Errorf("user does not exist")
 			}
+			fmt.Println("err: %w\n", err)
 			return err
 		}
 		// check if package exists locally
@@ -49,6 +50,7 @@ func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxI
 			if err == sql.ErrNoRows {
 				return fmt.Errorf("subscription package does not exist")
 			}
+			fmt.Println("err: %w\n", err)
 			return err
 		}
 		// create subscription in stripe
@@ -64,11 +66,20 @@ func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxI
 		s, err := subscription.New(sParams)
 
 		if err != nil {
+			fmt.Println("err: %w\n", err)
 			return err
 		}
 
-		stTm, _ := convertToUTCTime(s.CurrentPeriodStart)
-		endTm, _ := convertToUTCTime(s.CurrentPeriodEnd)
+		stTm, err := convertToUTCTime(s.CurrentPeriodStart)
+		if err != nil {
+			fmt.Println("err: %w\n", err)
+			return err
+		}
+		endTm, err := convertToUTCTime(s.CurrentPeriodEnd)
+		if err != nil {
+			fmt.Println("err: %w\n", err)
+			return err
+		}
 
 		// create subscription locally - tho sijui kama tunahitaji hii ata - we can fetch directly from stripe
 		_, err = q.CreateUserPackage(ctx, CreateUserPackageParams{
@@ -81,6 +92,7 @@ func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxI
 		})
 
 		if err != nil {
+			fmt.Println("err: %w\n", err)
 			return err
 		}
 

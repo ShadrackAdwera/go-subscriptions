@@ -1,4 +1,5 @@
 DB_URL=postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
+# DB_URL=postgresql://adwera:mdcclxxvi@localhost:5432/test_migrations?sslmode=disable
 
 migrate_create:
 	migrate create -ext sql -dir db/migrations -seq ${MIGRATE_NAME}
