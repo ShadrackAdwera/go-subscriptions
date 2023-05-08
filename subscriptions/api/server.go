@@ -22,6 +22,7 @@ func NewServer(store db.TxSubscriptionsStore) *Server {
 	//add middleware
 	router.GET("/subscriptions", srv.getPackages)
 	router.POST("/subscriptions", srv.createPackage)
+	router.POST("/subscriptions/subscribe", srv.subscribePackage)
 
 	srv.router = router
 	return &srv
