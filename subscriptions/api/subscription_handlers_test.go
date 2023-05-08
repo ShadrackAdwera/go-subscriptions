@@ -17,7 +17,7 @@ import (
 
 func dummyPackage() db.Package {
 	return db.Package{
-		ID:          utils.RandomInteger(1, 100),
+		ID:          utils.RandomString(10),
 		Name:        utils.RandomString(10),
 		Description: utils.RandomString(20),
 		Price:       utils.RandomInteger(5, 20),
