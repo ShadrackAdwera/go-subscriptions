@@ -20,6 +20,12 @@ type SubscribePackageTxOutput struct {
 	Message string
 }
 
+func convertToUTCTime(intTime int64) (time.Time, error) {
+	tm := time.Unix(intTime, 0).Format(time.RFC3339)
+	stTm, err := time.Parse(time.RFC3339, tm)
+	return stTm, err
+}
+
 func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxInput) (SubscribePackageTxOutput, error) {
 	sKey := os.Getenv("STRIPE_KEY")
 
@@ -61,10 +67,8 @@ func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxI
 			return err
 		}
 
-		currentStart := time.Unix(s.CurrentPeriodStart, 0).Format(time.RFC3339)
-		stTm, _ := time.Parse(time.RFC3339, currentStart)
-		currentEnd := time.Unix(s.CurrentPeriodEnd, 0).Format(time.RFC3339)
-		endTm, _ := time.Parse(time.RFC3339, currentEnd)
+		stTm, _ := convertToUTCTime(s.CurrentPeriodStart)
+		endTm, _ := convertToUTCTime(s.CurrentPeriodEnd)
 
 		// create subscription locally - tho sijui kama tunahitaji hii ata - we can fetch directly from stripe
 		_, err = q.CreateUserPackage(ctx, CreateUserPackageParams{
