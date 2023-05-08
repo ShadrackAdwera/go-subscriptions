@@ -4,10 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 
 	db "github.com/ShadrackAdwera/go-subscriptions/subscriptions/db/sqlc"
 	"github.com/hibiken/asynq"
 	"github.com/rs/zerolog/log"
+	stripe "github.com/stripe/stripe-go/v74"
+	"github.com/stripe/stripe-go/v74/customer"
 )
 
 type UserCreatedPayload struct {
@@ -27,7 +30,31 @@ func (processor *Processor) CreateAsyncUser(ctx context.Context, task *asynq.Tas
 		return fmt.Errorf("error unmarshalling JSON %w", asynq.SkipRetry)
 	}
 
-	user, err := processor.store.CreateSubscriptionUser(ctx, db.CreateSubscriptionUserParams(payload))
+	// create customer in stripe
+	sKey := os.Getenv("STRIPE_KEY")
+
+	if sKey == "" {
+		return fmt.Errorf("no stripe key found %w", asynq.SkipRetry)
+	}
+
+	stripe.Key = sKey
+	params := &stripe.CustomerParams{
+		Name:  stripe.String(payload.Username),
+		Email: stripe.String(payload.Email),
+	}
+
+	c, err := customer.New(params)
+
+	if err != nil {
+		return fmt.Errorf("an error occured while creating the user in stripe %w", err)
+	}
+
+	user, err := processor.store.CreateSubscriptionUser(ctx, db.CreateSubscriptionUserParams{
+		ID:       payload.ID,
+		Username: payload.Username,
+		Email:    payload.Email,
+		StripeID: c.ID,
+	})
 
 	if err != nil {
 		return fmt.Errorf("an error occured while creating the user %w", err)
@@ -35,7 +62,8 @@ func (processor *Processor) CreateAsyncUser(ctx context.Context, task *asynq.Tas
 
 	log.Info().
 		Str("user_name", user.Username).
-		Str("email", user.Email).
+		Int64("with ID of", user.ID).
+		Str("with Stripe ID of", c.ID).
 		Str("created at ", user.CreatedAt.Format("2006-01-02 15:04:05")).
 		Int64("with ID of", user.ID).
 		Msg("Async User Created")
