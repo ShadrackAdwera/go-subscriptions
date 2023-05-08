@@ -7,18 +7,20 @@ CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY,
   "username" varchar UNIQUE NOT NULL,
   "email" varchar UNIQUE NOT NULL,
+  "stripe_id" varchar UNIQUE NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE "packages" (
-  "id" bigserial PRIMARY KEY,
+  "id" varchar PRIMARY KEY,
   "name" varchar NOT NULL,
   "description" varchar NOT NULL,
-  "price" bigint NOT NULL
+  "price" bigint NOT NULL,
+  "stripe_price_id" varchar NOT NULL
 );
 
 CREATE TABLE "users_packages" (
-  "id" bigserial PRIMARY KEY,
+  "id" varchar PRIMARY KEY,
   "user_id" bigint NOT NULL,
   "package_id" bigint NOT NULL,
   "status" subscription_status NOT NULL,
