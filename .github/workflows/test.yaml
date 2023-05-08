@@ -51,7 +51,7 @@ jobs:
         cd auth
         make tests
     
-    # - name: Test Subscriptions
-    #   run: |
-    #     cd subscriptions
-    #     make tests
+    - name: Test Subscriptions
+      run: |
+        cd subscriptions
+        make tests
