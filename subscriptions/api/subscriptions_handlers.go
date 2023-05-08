@@ -26,18 +26,49 @@ type PackageArgs struct {
 
 func (srv *Server) createPackage(ctx *gin.Context) {
 	var packageArgs PackageArgs
+	//add authorization
 
 	if err := ctx.ShouldBindJSON(&packageArgs); err != nil {
 		ctx.JSON(http.StatusBadRequest, errJSON(err))
 		return
 	}
 
-	p, err := srv.store.CreatePackage(ctx, db.CreatePackageParams(packageArgs))
+	p, err := srv.store.CreatePackageTx(ctx, db.CreatePackageTxInput{
+		Name:        packageArgs.Name,
+		Description: packageArgs.Description,
+		Price:       packageArgs.Price,
+	})
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errJSON(err))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"package": p})
+	ctx.JSON(http.StatusCreated, gin.H{"message": p.Message})
+}
+
+type SubscriptionPackageArgs struct {
+	CustomerID          string `json:"customer_id" binding:"required,min=5"`
+	SubscriptionPackage string `json:"subscription_package" binding:"required,min=5"`
+}
+
+func (srv *Server) subscribePackage(ctx *gin.Context) {
+	var subscriptionPackageArgs SubscriptionPackageArgs
+
+	if err := ctx.ShouldBindJSON(&subscriptionPackageArgs); err != nil {
+		ctx.JSON(http.StatusBadRequest, errJSON(err))
+		return
+	}
+
+	response, err := srv.store.SubscribePackageTx(ctx, db.SubscribePackageTxInput{
+		CustomerID:            subscriptionPackageArgs.CustomerID,
+		SubscriptionPackageID: subscriptionPackageArgs.SubscriptionPackage,
+	})
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errJSON(err))
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{"message": response.Message})
 }

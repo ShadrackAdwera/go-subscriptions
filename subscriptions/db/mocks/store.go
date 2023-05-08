@@ -50,6 +50,21 @@ func (mr *MockTxSubscriptionsStoreMockRecorder) CreatePackage(arg0, arg1 interfa
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackage", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).CreatePackage), arg0, arg1)
 }
 
+// CreatePackageTx mocks base method.
+func (m *MockTxSubscriptionsStore) CreatePackageTx(arg0 context.Context, arg1 db.CreatePackageTxInput) (db.CreatePackageTxResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePackageTx", arg0, arg1)
+	ret0, _ := ret[0].(db.CreatePackageTxResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePackageTx indicates an expected call of CreatePackageTx.
+func (mr *MockTxSubscriptionsStoreMockRecorder) CreatePackageTx(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackageTx", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).CreatePackageTx), arg0, arg1)
+}
+
 // CreateSubscriptionUser mocks base method.
 func (m *MockTxSubscriptionsStore) CreateSubscriptionUser(arg0 context.Context, arg1 db.CreateSubscriptionUserParams) (db.User, error) {
 	m.ctrl.T.Helper()
@@ -81,7 +96,7 @@ func (mr *MockTxSubscriptionsStoreMockRecorder) CreateUserPackage(arg0, arg1 int
 }
 
 // DeletePackage mocks base method.
-func (m *MockTxSubscriptionsStore) DeletePackage(arg0 context.Context, arg1 int64) error {
+func (m *MockTxSubscriptionsStore) DeletePackage(arg0 context.Context, arg1 string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeletePackage", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -109,7 +124,7 @@ func (mr *MockTxSubscriptionsStoreMockRecorder) DeleteSubscriptionUser(arg0, arg
 }
 
 // DeleteUserPackage mocks base method.
-func (m *MockTxSubscriptionsStore) DeleteUserPackage(arg0 context.Context, arg1 int64) error {
+func (m *MockTxSubscriptionsStore) DeleteUserPackage(arg0 context.Context, arg1 string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteUserPackage", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -120,6 +135,21 @@ func (m *MockTxSubscriptionsStore) DeleteUserPackage(arg0 context.Context, arg1 
 func (mr *MockTxSubscriptionsStoreMockRecorder) DeleteUserPackage(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUserPackage", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).DeleteUserPackage), arg0, arg1)
+}
+
+// GetPackage mocks base method.
+func (m *MockTxSubscriptionsStore) GetPackage(arg0 context.Context, arg1 string) (db.Package, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPackage", arg0, arg1)
+	ret0, _ := ret[0].(db.Package)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPackage indicates an expected call of GetPackage.
+func (mr *MockTxSubscriptionsStoreMockRecorder) GetPackage(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackage", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).GetPackage), arg0, arg1)
 }
 
 // GetPackages mocks base method.
@@ -135,6 +165,21 @@ func (m *MockTxSubscriptionsStore) GetPackages(arg0 context.Context) ([]db.Packa
 func (mr *MockTxSubscriptionsStoreMockRecorder) GetPackages(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPackages", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).GetPackages), arg0)
+}
+
+// GetSubscriptionUserByStripeId mocks base method.
+func (m *MockTxSubscriptionsStore) GetSubscriptionUserByStripeId(arg0 context.Context, arg1 string) (db.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSubscriptionUserByStripeId", arg0, arg1)
+	ret0, _ := ret[0].(db.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetSubscriptionUserByStripeId indicates an expected call of GetSubscriptionUserByStripeId.
+func (mr *MockTxSubscriptionsStoreMockRecorder) GetSubscriptionUserByStripeId(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSubscriptionUserByStripeId", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).GetSubscriptionUserByStripeId), arg0, arg1)
 }
 
 // GetSubscriptionUsers mocks base method.
@@ -165,6 +210,21 @@ func (m *MockTxSubscriptionsStore) GetUserPackages(arg0 context.Context) ([]db.G
 func (mr *MockTxSubscriptionsStoreMockRecorder) GetUserPackages(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserPackages", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).GetUserPackages), arg0)
+}
+
+// SubscribePackageTx mocks base method.
+func (m *MockTxSubscriptionsStore) SubscribePackageTx(arg0 context.Context, arg1 db.SubscribePackageTxInput) (db.SubscribePackageTxOutput, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubscribePackageTx", arg0, arg1)
+	ret0, _ := ret[0].(db.SubscribePackageTxOutput)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SubscribePackageTx indicates an expected call of SubscribePackageTx.
+func (mr *MockTxSubscriptionsStoreMockRecorder) SubscribePackageTx(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubscribePackageTx", reflect.TypeOf((*MockTxSubscriptionsStore)(nil).SubscribePackageTx), arg0, arg1)
 }
 
 // UpdatePackage mocks base method.
