@@ -23,7 +23,7 @@ RETURNING id, user_id, package_id, status, start_date, end_date
 type CreateUserPackageParams struct {
 	ID        string             `json:"id"`
 	UserID    int64              `json:"user_id"`
-	PackageID int64              `json:"package_id"`
+	PackageID string             `json:"package_id"`
 	Status    SubscriptionStatus `json:"status"`
 	StartDate time.Time          `json:"start_date"`
 	EndDate   time.Time          `json:"end_date"`
@@ -69,7 +69,7 @@ JOIN packages ON users_packages.package_id = packages.id
 type GetUserPackagesRow struct {
 	ID            string             `json:"id"`
 	UserID        int64              `json:"user_id"`
-	PackageID     int64              `json:"package_id"`
+	PackageID     string             `json:"package_id"`
 	Status        SubscriptionStatus `json:"status"`
 	StartDate     time.Time          `json:"start_date"`
 	EndDate       time.Time          `json:"end_date"`
@@ -137,7 +137,7 @@ RETURNING id, user_id, package_id, status, start_date, end_date
 `
 
 type UpdateUserPackageParams struct {
-	PackageID sql.NullInt64          `json:"package_id"`
+	PackageID sql.NullString         `json:"package_id"`
 	Status    NullSubscriptionStatus `json:"status"`
 	StartDate sql.NullTime           `json:"start_date"`
 	EndDate   sql.NullTime           `json:"end_date"`

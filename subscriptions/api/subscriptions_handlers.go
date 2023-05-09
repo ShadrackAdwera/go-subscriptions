@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	db "github.com/ShadrackAdwera/go-subscriptions/subscriptions/db/sqlc"
@@ -64,6 +65,8 @@ func (srv *Server) subscribePackage(ctx *gin.Context) {
 		CustomerID:            subscriptionPackageArgs.CustomerID,
 		SubscriptionPackageID: subscriptionPackageArgs.SubscriptionPackage,
 	})
+
+	fmt.Println("err: %w\n", err)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errJSON(err))

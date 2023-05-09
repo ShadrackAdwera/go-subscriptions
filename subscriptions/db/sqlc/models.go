@@ -71,7 +71,7 @@ type User struct {
 type UsersPackage struct {
 	ID        string             `json:"id"`
 	UserID    int64              `json:"user_id"`
-	PackageID int64              `json:"package_id"`
+	PackageID string             `json:"package_id"`
 	Status    SubscriptionStatus `json:"status"`
 	StartDate time.Time          `json:"start_date"`
 	EndDate   time.Time          `json:"end_date"`
