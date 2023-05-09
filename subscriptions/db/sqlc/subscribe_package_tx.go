@@ -85,7 +85,7 @@ func (s *Store) SubscribePackageTx(ctx context.Context, args SubscribePackageTxI
 		_, err = q.CreateUserPackage(ctx, CreateUserPackageParams{
 			ID:        s.ID,
 			UserID:    localCust.ID,
-			PackageID: localCust.ID,
+			PackageID: localPackage.ID,
 			Status:    SubscriptionStatusActive,
 			StartDate: stTm,
 			EndDate:   endTm,
