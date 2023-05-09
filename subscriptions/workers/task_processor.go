@@ -55,9 +55,9 @@ func (processor *Processor) CreateAsyncUser(ctx context.Context, task *asynq.Tas
 		Email:    payload.Email,
 		StripeID: c.ID,
 	})
-
+	// modify this
 	if err != nil {
-		return fmt.Errorf("an error occured while creating the user %w", err)
+		return fmt.Errorf("an error occured while creating the user %w", asynq.SkipRetry)
 	}
 
 	log.Info().
